@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cooking Fuel Visualization</title>
+  <link rel="stylesheet" href="jquery-jvectormap-1.1.1.css" type="text/css" media="screen"/>
+  <script src="jquery.min.js"></script>
+  <script src="jquery-jvectormap-1.1.1.min.js"></script>
+  <script src="nepalMap.js"></script>
+  <script src="data.js"></script> 
+  <script src="bootstrap.min.js"></script>
+  <link rel="stylesheet" href="bootstrap.min.css" type="text/css"/>
+	</head>
+<body>
+<div class="navbar navbar-fixed-top navbar-inverse">  
+  <div class="navbar-inner">  
+    <div class="container">  
+	<ul class="nav">
+  <li class="active">
+   <a class="brand" href="#"><i class="icon-home icon-white"></i>Fuel Consumption in Nepal</a>
+  </li>
+  <li><a href="#">About</a></li>
+  <li><a href="#">Contact</a></li>
+</ul>
+            
+    </div>  
+  </div>  
+</div> 
+
+<br>
+<br>
+<br>
+<script type="text/javascript">
+
+(function($){ // encapsulate jQuery
+
+$(function () {
+        $('#container').highcharts({
+            chart: {
+            },
+            title: {
+                text: 'Fuel Consumption Chart'
+            },
+            xAxis: {
+                categories: ['Mountain', 'Hill', 'Terai']
+            },
+            tooltip: {
+                formatter: function() {
+                    var s;
+                    if (this.point.name) { // the pie chart
+                        s = ''+
+                            this.point.name +': '+ this.y +' households';
+                    } else {
+                        s = ''+
+                            this.x  +': '+ this.y;
+                    }
+                    return s;
+                }
+            },
+            labels: {
+                items: [{
+                    html: 'Total Fuel Consumption',
+                    style: {
+                        left: '950px',
+                        top: '-20px',
+                        color: 'black'
+                    }
+                }]
+            },
+            series: [{
+                type: 'column',
+                name: 'Firewood',
+                data: [3344843, 1696376, 1429005]
+            },
+			{
+                type: 'column',
+                name: 'Kerosene',
+                data: [1990, 27554, 26066]
+            },
+			{
+                type: 'column',
+                name: 'LP gas',
+                data: [11143, 744086, 385433]
+            },{
+                type: 'column',
+                name: 'Cow dung',
+                data: [1517, 2810, 558799]
+            },{
+                type: 'column',
+                name: 'Bio gas',
+                data: [792, 41147, 89657]
+            }, {
+                type: 'column',
+                name: 'Electricity',
+                data: [1169, 2174, 1180]
+            }, {
+                type: 'column',
+                name: 'Others',
+                data: [335,4332, 17916]
+            }, {
+                type: 'pie',
+                name: 'Total consumption',
+                data: [{
+                    name: 'Firewood',
+                    y: 3470224,
+                    color: Highcharts.getOptions().colors[0] // Jane's color
+                },
+				{
+                    name: 'Kerosene',
+                    y: 55610,
+                    color: Highcharts.getOptions().colors[1] // Jane's color
+                },{
+                    name: 'LP gas',
+                    y: 1140662,
+                    color: Highcharts.getOptions().colors[2] // Jane's color
+                },{
+                    name: 'Cow dung',
+                    y: 563126,
+                    color: Highcharts.getOptions().colors[3] // Jane's color
+                }, {
+                    name: 'Bio gas',
+                    y: 131596,
+                    color: Highcharts.getOptions().colors[4] // John's color
+                }, 
+				{
+                    name: 'Electricity',
+                    y: 4523,
+                    color: Highcharts.getOptions().colors[5] // John's color
+                }, 
+				
+				{
+                    name: 'Others',
+                    y: 22583,
+                    color: Highcharts.getOptions().colors[6] // Joe's color
+                }],
+                center: [1000, 80],
+                size: 200,
+                showInLegend: false,
+                dataLabels: {
+                    enabled: false
+                }
+            }]
+        });
+    });
+    
+
+})(jQuery);
+</script>
+
+
+	<div style="margin: 0 1em" >
+	<script src="highcharts.js"></script>
+<script src="exporting.js"></script>
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 5px auto"></div>
+	</div>
+	<div style="margin: 1em">
+	
+		
+		<div class="buttons">
+			<a href="javascript:" 
+				onclick="hs.htmlExpand(this, { width: 800,
+					headingText: 'Highcharts Configuration Preview', 
+					wrapperClassName: 'draggable-header' })">
+				
+			
+	</div>
+	</div>	
+	</div>
+</div>
+<br>
+<br>
+<br>
+<div class="span2">
+<div class="well sidebar-nav">
+Most Used Fuel: Firewood<br>
+Least Used Fuel: Kerosone<br>
+</div>
+</div>
+<table align="right">
+<tr>
+<td>
+  <div id="firewood" style="width: 350px; height: 300px"><h3>Firewood</h3>
+  <script>
+    $(function(){
+      $('#firewood').vectorMap({
+          map: 'world_mill_en',
+	  backgroundColor: '#fff',
+          series: {
+            regions: [{
+              values: firewood_data,
+              scale: ['#C8EEFF', '#0071A4'],
+              normalizeFunction: 'polynomial'
+            }]
+          },
+          onLabelShow: function(e, el, code){
+            el.html(el.html()+' (GDP - '+firewood_data[code]+')');
+          }
+        });
+    });
+  </script>
+</div>
+</td>
+<td>
+<div id="keresone" style="width: 350px; height: 300px"><h3>Kerosene</h3>
+  <script>
+    $(function(){
+      $('#keresone').vectorMap({
+          map: 'world_mill_en',
+	  backgroundColor: '#fff',
+          series: {
+            regions: [{
+              values: keresone_data,
+              scale: ['#C8EEFF', '#0071A4'],
+              normalizeFunction: 'polynomial'
+            }]
+          },
+          onLabelShow: function(e, el, code){
+            el.html(el.html()+' (GDP - '+keresone_data[code]+')');
+          }
+        });
+    });
+  </script>
+</div>
+</td>
+<td>
+<div id="lpgas" style="width: 350px; height: 300px"><h3>LPgas</h3>
+  <script>
+    $(function(){
+      $('#lpgas').vectorMap({
+          map: 'world_mill_en',
+	  backgroundColor: '#fff',
+          series: {
+            regions: [{
+              values: LPgas_data,
+              scale: ['#C8EEFF', '#0071A4'],
+              normalizeFunction: 'polynomial'
+            }]
+          },
+          onLabelShow: function(e, el, code){
+            el.html(el.html()+' (GDP - '+LPgas_data[code]+')');
+          }
+        });
+    });
+  </script>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div id="cowdung" style="width: 350px; height: 300px">
+<br>
+<br>
+<h3>Cowdung</h3>
+  <script>
+    $(function(){
+      $('#cowdung').vectorMap({
+          map: 'world_mill_en',
+	  backgroundColor: '#fff',
+          series: {
+            regions: [{
+              values: cowdung_data,
+              scale: ['#C8EEFF', '#0071A4'],
+              normalizeFunction: 'polynomial'
+            }]
+          },
+          onLabelShow: function(e, el, code){
+            el.html(el.html()+' (GDP - '+cowdung_data[code]+')');
+          }
+        });
+    });
+  </script>
+</div>
+</td>
+<td>
+<div id="biogas" style="width: 350px; height: 300px"><br>
+<br><h3>Biogas</h3>
+  <script>
+    $(function(){
+      $('#biogas').vectorMap({
+          map: 'world_mill_en',
+	  backgroundColor: '#fff',
+          series: {
+            regions: [{
+              values: biogas_data,
+              scale: ['#C8EEFF', '#0071A4'],
+              normalizeFunction: 'polynomial'
+            }]
+          },
+          onLabelShow: function(e, el, code){
+            el.html(el.html()+' (GDP - '+biogas_data[code]+')');
+          }
+        });
+    });
+  </script>
+</div>
+</td>
+<td>
+<div id="electricity" style="width: 350px; height: 300px"><br>
+<br><h3>Electricity</h3>
+  <script>
+    $(function(){
+      $('#electricity').vectorMap({
+          map: 'world_mill_en',
+	  backgroundColor: '#fff',
+          series: {
+            regions: [{
+              values: electricity_data,
+              scale: ['#C8EEFF', '#0071A4'],
+              normalizeFunction: 'polynomial'
+            }]
+          },
+          onLabelShow: function(e, el, code){
+            el.html(el.html()+' (GDP - '+electricity_data[code]+')');
+          }
+        });
+    });
+  </script>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div id="Others" style="width: 350px; height: 300px"><br>
+<br><br><br><h3>Others</h3>
+  <script>
+    $(function(){
+      $('#Others').vectorMap({
+          map: 'world_mill_en',
+	  backgroundColor: '#fff',
+          series: {
+            regions: [{
+              values: others_data,
+              scale: ['#C8EEFF', '#0071A4'],
+              normalizeFunction: 'polynomial'
+            }]
+          },
+          onLabelShow: function(e, el, code){
+            el.html(el.html()+' (GDP - '+others_data[code]+')');
+          }
+        });
+    });
+  </script>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>
